@@ -1,0 +1,124 @@
+﻿<Window x:Class="connect_four.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:connect_four"
+        mc:Ignorable="d"
+        Title="Connect Four" Height="620" Width="650" ResizeMode="NoResize">
+    <Window.Resources>
+        <Style TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Vertical"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="Height" Value="520"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#111"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="0,15,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Transparent"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="DarkOrange"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Border">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="CornerRadius" Value="40"/>
+            <Setter Property="Background" Value="#333"/>
+            <Setter Property="Margin" Value="0,5,0,0"/>
+        </Style>
+    </Window.Resources>
+    <Grid x:Name="windowGrid" Background="#222">
+        <!--Banner Elements-->
+        <Border x:Name="brdCurrentPlayer" Background="Red" Height="25" Margin="0,10,15,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="25"/>
+        <TextBlock Foreground="White" Text="Current Player's Turn:" FontSize="18" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,10,45,0" Height="25" HorizontalAlignment="Right" Width="170"/>
+        <Button x:Name="btnRestart" Content="Restart Game" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Width="120" Click="btnRestart_Click"/>
+        <TextBlock x:Name="txbWinner" Height="120" FontSize="75" Foreground="White" Panel.ZIndex="1" Background="Black" Opacity="0.85" TextAlignment="Center" Visibility="Collapsed" TextWrapping="Wrap" />
+        <!--A-->
+        <StackPanel Margin="10,30,0,10">
+            <Border x:Name="bdrA6" Height="75"/>
+            <Border x:Name="bdrA5" Height="75"/>
+            <Border x:Name="bdrA4" Height="75"/>
+            <Border x:Name="bdrA3" Height="75"/>
+            <Border x:Name="bdrA2" Height="75"/>
+            <Border x:Name="bdrA1" Height="75"/>
+            <Button x:Name="btnA" Content="A" Click="btnA_Click"/>
+        </StackPanel>
+        <!--B-->
+        <StackPanel Margin="100,30,0,10">
+            <Border x:Name="bdrB6" Height="75"/>
+            <Border x:Name="bdrB5" Height="75"/>
+            <Border x:Name="bdrB4" Height="75"/>
+            <Border x:Name="bdrB3" Height="75"/>
+            <Border x:Name="bdrB2" Height="75"/>
+            <Border x:Name="bdrB1" Height="75"/>
+            <Button x:Name="btnB" Content="B" Click="btnB_Click"/>
+        </StackPanel>
+        <!--C-->
+        <StackPanel Margin="190,30,0,10">
+            <Border x:Name="bdrC6" Height="75"/>
+            <Border x:Name="bdrC5" Height="75"/>
+            <Border x:Name="bdrC4" Height="75"/>
+            <Border x:Name="bdrC3" Height="75"/>
+            <Border x:Name="bdrC2" Height="75"/>
+            <Border x:Name="bdrC1" Height="75"/>
+            <Button x:Name="btnC" Content="C" Click="btnC_Click"/>
+        </StackPanel>
+        <!--D-->
+        <StackPanel Margin="280,30,0,10">
+            <Border x:Name="bdrD6" Height="75"/>
+            <Border x:Name="bdrD5" Height="75"/>
+            <Border x:Name="bdrD4" Height="75"/>
+            <Border x:Name="bdrD3" Height="75"/>
+            <Border x:Name="bdrD2" Height="75"/>
+            <Border x:Name="bdrD1" Height="75"/>
+            <Button x:Name="btnD" Content="D" Click="btnD_Click"/>
+        </StackPanel>
+        <!--E-->
+        <StackPanel Margin="370,30,0,10">
+            <Border x:Name="bdrE6" Height="75"/>
+            <Border x:Name="bdrE5" Height="75"/>
+            <Border x:Name="bdrE4" Height="75"/>
+            <Border x:Name="bdrE3" Height="75"/>
+            <Border x:Name="bdrE2" Height="75"/>
+            <Border x:Name="bdrE1" Height="75"/>
+            <Button x:Name="btnE" Content="E" Click="btnE_Click"/>
+        </StackPanel>
+        <!--F-->
+        <StackPanel Margin="460,30,0,10">
+            <Border x:Name="bdrF6" Height="75"/>
+            <Border x:Name="bdrF5" Height="75"/>
+            <Border x:Name="bdrF4" Height="75"/>
+            <Border x:Name="bdrF3" Height="75"/>
+            <Border x:Name="bdrF2" Height="75"/>
+            <Border x:Name="bdrF1" Height="75"/>
+            <Button x:Name="btnF" Content="F" Click="btnF_Click"/>
+        </StackPanel>
+        <!--G-->
+        <StackPanel Margin="550,30,0,10">
+            <Border x:Name="bdrG6" Height="75"/>
+            <Border x:Name="bdrG5" Height="75"/>
+            <Border x:Name="bdrG4" Height="75"/>
+            <Border x:Name="bdrG3" Height="75"/>
+            <Border x:Name="bdrG2" Height="75"/>
+            <Border x:Name="bdrG1" Height="75"/>
+            <Button x:Name="btnG" Content="G" Click="btnG_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
