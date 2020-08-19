@@ -71,12 +71,12 @@ namespace connect_four {
         }
 
         //# Main Window class -> ConnectFour class
-        public static void selectColumn(int column) {
-            updateGameGrid(column, columnCounter[column]);
+        public static void playerSelected(int column) {
+            updateUI(column, columnCounter[column]);
         }
 
         //# Update arGameGrid & UI borders
-        private static void updateGameGrid(int column, int row) {
+        private static void updateUI(int column, int row) {
             // Validate row is under max index
             if (columnCounter[column] != ROW_MAX) {
                 // Mark Red team selection on UI

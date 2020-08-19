@@ -38,31 +38,31 @@ namespace connect_four {
         }
         // A
         private void btnA_Click(object sender, RoutedEventArgs e) {
-            ConnectFour.selectColumn(0);
+            ConnectFour.playerSelected(0);
         }
         // B
         private void btnB_Click(object sender, RoutedEventArgs e) {
-            ConnectFour.selectColumn(1);
+            ConnectFour.playerSelected(1);
         }
         // C
         private void btnC_Click(object sender, RoutedEventArgs e) {
-            ConnectFour.selectColumn(2);
+            ConnectFour.playerSelected(2);
         }
         // D
         private void btnD_Click(object sender, RoutedEventArgs e) {
-            ConnectFour.selectColumn(3);
+            ConnectFour.playerSelected(3);
         }
         // E
         private void btnE_Click(object sender, RoutedEventArgs e) {
-            ConnectFour.selectColumn(4);
+            ConnectFour.playerSelected(4);
         }
         // F
         private void btnF_Click(object sender, RoutedEventArgs e) {
-            ConnectFour.selectColumn(5);
+            ConnectFour.playerSelected(5);
         }
         // G
         private void btnG_Click(object sender, RoutedEventArgs e) {
-            ConnectFour.selectColumn(6);
+            ConnectFour.playerSelected(6);
         }
     }
 }
