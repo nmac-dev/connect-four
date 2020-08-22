@@ -11,17 +11,18 @@ namespace connect_four {
     /// </summary>
     public partial class MainWindow : Window {
 
-        /** Variables */
+        /** Lists */
         private readonly List<List<Border>> lsBorders;
         private readonly List<StackPanel> lsStackPanels;
         private readonly List<Border> lsTemp;
 
-        /** Init */
+        /** Constructor */
         public MainWindow() {
-            InitializeComponent();
+            InitializeComponent();  // Gets URI for the .xaml
             lsBorders = new List<List<Border>>();
             lsStackPanels = new List<StackPanel>();
             lsTemp = new List<Border>();
+            // Populates the lists with UI elements
             foreach (StackPanel stackPanel in windowGrid.Children.OfType<StackPanel>()) {
                 lsTemp = stackPanel.Children.OfType<Border>().ToList();
                 lsTemp.Reverse();

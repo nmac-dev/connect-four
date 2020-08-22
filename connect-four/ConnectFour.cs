@@ -5,9 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace connect_four {
-    /**
-     * Defines the UI manipulation and game logic
-     */
+    /** Defines the UI manipulation and game logic */
     static class ConnectFour {
 
         /** Const */
@@ -31,8 +29,7 @@ namespace connect_four {
         /** Game grid */
         private static readonly int[] columnCounter = new int[7];      // Increments a column upon player selection
         private static readonly int[,] arGameGrid = new int[7, 6];     // Tracks each teams selection
-        /**
-         *   -----------------------
+        /*   -----------------------
          * 5 | 05 15 25 35 45 55 65 |
          * 4 | 04 14 24 34 44 54 64 |
          * 3 | 03 13 23 33 43 53 63 | Rotated 90* anti-clockwise
@@ -43,9 +40,7 @@ namespace connect_four {
          *     A  B  C  D  E  F  G
          */
 
-        /** Functions (#) */
-
-        // # Brings the UI elements to the class
+        /** Brings the UI elements to the ConnectFour class */
         public static void setupUI(List<List<Border>> lsBrd, List<StackPanel> lsBtn, Border brd, TextBlock txb) {
             lsBorders = lsBrd;
             lsStackPanels = lsBtn;
@@ -53,7 +48,7 @@ namespace connect_four {
             txbWinner = txb;
         }
 
-        // # Resets arGameGrid & UI Elements
+        /** Resets arGameGrid & UI Elements */
         public static void restartGame() {
             // Reset grid
             for (posX = 0; posX < COLUMN_MAX; posX++) {
@@ -70,12 +65,12 @@ namespace connect_four {
             enableButtons(true);
         }
 
-        // # Main Window class -> ConnectFour class
+        /** MainWindow class -> ConnectFour class */
         public static void playerSelected(int column) {
             updateUI(column, columnCounter[column]);
         }
 
-        // # Update arGameGrid & UI borders
+        /** Updates UI & arGameGrid */
         private static void updateUI(int column, int row) {
             // Validate row is under max index
             if (columnCounter[column] != ROW_MAX) {
@@ -104,7 +99,7 @@ namespace connect_four {
             currentPlayer = !currentPlayer;
         }
 
-        // # Check each direction on the player's selection for a victory (4 in a line)
+        /** Check each direction on the player's selection for a victory (4 in a line) */
         private static void runGameLogic(int column) {
             bool player = currentPlayer;
             int row = columnCounter[column];
@@ -137,7 +132,7 @@ namespace connect_four {
                 }
             }
 
-            // # (Nested) Finds the lowest possible postion index from the game grid
+            /** (Nested) Finds the lowest possible postion index from the game grid */
             void findPositionLimit(bool invert) {
                 posX = column;
                 posY = row;
@@ -156,7 +151,7 @@ namespace connect_four {
                 }
             }
 
-            // # (Nested) Compare the score against the index
+            /** (Nested) Compare the score against the index */
             void compareScore() {
                 bool identifyPlayer = index switch {
                     1 => true,      // Red
@@ -183,7 +178,7 @@ namespace connect_four {
             }
         }
 
-        // # Enables/disables UI buttons for team input
+        /** Enables/disables UI buttons for team input */
         private static void enableButtons(bool isEnabled) {
             foreach(StackPanel stackPanel in lsStackPanels) {
                 stackPanel.IsEnabled = isEnabled;
