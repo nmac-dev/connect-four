@@ -11,17 +11,30 @@ namespace connect_four {
     /// </summary>
     public partial class MainWindow : Window {
 
+        /*      Const       */
+        private const int COLUMN_A = 0,
+                          COLUMN_B = 1,
+                          COLUMN_C = 2,
+                          COLUMN_D = 3,
+                          COLUMN_E = 4,
+                          COLUMN_F = 5,
+                          COLUMN_G = 6;
+
         /** Lists */
-        private readonly List<List<Border>> lsBorders;
-        private readonly List<StackPanel> lsStackPanels;
-        private readonly List<Border> lsTemp;
+        private readonly List<List<Border>> lsBorders;      // The borders within each stackpanel to display player selcetion
+        private readonly List<StackPanel> lsStackPanels;    // All stackpanels representing borders
+
+        private CFourLogic connectFour;                     // Instantiated for each game
 
         /** Constructor */
         public MainWindow() {
             InitializeComponent();  // Gets URI for the .xaml
+
+            List<Border> lsTemp;
+
             lsBorders = new List<List<Border>>();
             lsStackPanels = new List<StackPanel>();
-            lsTemp = new List<Border>();
+
             // Populates the lists with UI elements
             foreach (StackPanel stackPanel in windowGrid.Children.OfType<StackPanel>()) {
                 lsTemp = stackPanel.Children.OfType<Border>().ToList();
@@ -29,41 +42,46 @@ namespace connect_four {
                 lsBorders.Add(lsTemp);
                 lsStackPanels.Add(stackPanel);
             }
-            ConnectFour.setupUI(lsBorders, lsStackPanels, brdCurrentPlayer, txbWinner);
+            CFourLogic.getUIElements(lsBorders, lsStackPanels, brdCurrentPlayer, txbWinner);
+            // Create new game
+            connectFour = new CFourLogic();
         }
 
-        /** Events */
+        /*      Events      */
         // Restart
         private void btnRestart_Click(object sender, RoutedEventArgs e) {
-            ConnectFour.restartGame();
+            // Instantiate new game
+            connectFour = new CFourLogic();
+            // Reset main window (.xaml) elements
+            connectFour.resetUI();
         }
         // A
         private void btnA_Click(object sender, RoutedEventArgs e) {
-            ConnectFour.playerSelected(0);
+            connectFour.checkUserInput(COLUMN_A);
         }
         // B
         private void btnB_Click(object sender, RoutedEventArgs e) {
-            ConnectFour.playerSelected(1);
+            connectFour.checkUserInput(COLUMN_B);
         }
         // C
         private void btnC_Click(object sender, RoutedEventArgs e) {
-            ConnectFour.playerSelected(2);
+            connectFour.checkUserInput(COLUMN_C);
         }
         // D
         private void btnD_Click(object sender, RoutedEventArgs e) {
-            ConnectFour.playerSelected(3);
+            connectFour.checkUserInput(COLUMN_D);
         }
         // E
         private void btnE_Click(object sender, RoutedEventArgs e) {
-            ConnectFour.playerSelected(4);
+            connectFour.checkUserInput(COLUMN_E);
         }
         // F
         private void btnF_Click(object sender, RoutedEventArgs e) {
-            ConnectFour.playerSelected(5);
+            connectFour.checkUserInput(COLUMN_F);
         }
         // G
         private void btnG_Click(object sender, RoutedEventArgs e) {
-            ConnectFour.playerSelected(6);
+            connectFour.checkUserInput(COLUMN_G);
         }
     }
 }

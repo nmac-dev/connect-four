@@ -6,29 +6,27 @@ using System.Windows.Media;
 
 namespace connect_four {
     /** Defines the UI manipulation and game logic */
-    static class ConnectFour {
+    class CFourLogic {
 
-        /** Const */
-        private static readonly int COLUMN_MAX = 7;
-        private static readonly int ROW_MAX = 6;
+        /*      Const       */
+        private const int COLUMN_MAX = 7;
+        private const int ROW_MAX = 6;
         private static readonly SolidColorBrush RGB_RED = new SolidColorBrush(Color.FromRgb(0xff, 0x00, 0x00));
         private static readonly SolidColorBrush RGB_YELLOW = new SolidColorBrush(Color.FromRgb(0xff, 0xff, 0x00));
         private static readonly SolidColorBrush RGB_DARK = new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33));
 
-        /** UI Elements */
+        /*      UI Elements     */
         private static List<List<Border>> lsBorders;
         private static List<StackPanel> lsStackPanels;
         private static Border brdCurrentPlayer;
         private static TextBlock txbWinner;
 
-        /** Game Variables */
-        private static int score, index;            // Arithmatic for game logic
-        private static int posX, posY;              // Position: X (column) & Y (row)
-        private static bool currentPlayer = true;   // true = Red team, false = Yellow team
+        /*      Game Variables      */
+        private bool currentPlayer = true;   // true = Red team, false = Yellow team
         
         /** Game grid */
-        private static readonly int[] columnCounter = new int[7];      // Increments a column upon player selection
-        private static readonly int[,] arGameGrid = new int[7, 6];     // Tracks each teams selection
+        private readonly int[] columnCounter;      // Increments a column upon player selection
+        private readonly int[,] arGameGrid;     // Tracks each teams selection
         /*   -----------------------
          * 5 | 05 15 25 35 45 55 65 |
          * 4 | 04 14 24 34 44 54 64 |
@@ -40,49 +38,27 @@ namespace connect_four {
          *     A  B  C  D  E  F  G
          */
 
-        /** Brings the UI elements to the ConnectFour class */
-        public static void setupUI(List<List<Border>> lsBrd, List<StackPanel> lsBtn, Border brd, TextBlock txb) {
-            lsBorders = lsBrd;
-            lsStackPanels = lsBtn;
-            brdCurrentPlayer = brd;
-            txbWinner = txb;
-        }
-
-        /** Resets arGameGrid & UI Elements */
-        public static void restartGame() {
-            // Reset grid
-            for (posX = 0; posX < COLUMN_MAX; posX++) {
-                for (posY = 0; posY < ROW_MAX; posY++) {
-                    arGameGrid[posX, posY] = 0;
-                    lsBorders[posX][posY].Background = RGB_DARK;
-                }
-                columnCounter[posX] = 0;
-            }
-            // Reset player to default
+        /** Constructor */
+        public CFourLogic() {
             currentPlayer = true;
-            brdCurrentPlayer.Background = RGB_RED;
-            txbWinner.Visibility = Visibility.Collapsed;
-            enableButtons(true);
-        }
-
-        /** MainWindow class -> ConnectFour class */
-        public static void playerSelected(int column) {
-            updateUI(column, columnCounter[column]);
+            columnCounter = new int[COLUMN_MAX];
+            arGameGrid = new int[COLUMN_MAX, ROW_MAX];
         }
 
         /** Updates UI & arGameGrid */
-        private static void updateUI(int column, int row) {
+        public void checkUserInput(int column) {
+            int row = columnCounter[column];
             // Validate row is under max index
-            if (columnCounter[column] != ROW_MAX) {
+            if (row != ROW_MAX) {
                 // Mark Red team selection on UI
                 if (currentPlayer) {
                     arGameGrid[column, row] = 1;
-                    lsBorders[column][columnCounter[column]].Background = RGB_RED;
+                    updateUIGrid(column, columnCounter[column], RGB_RED);
                     brdCurrentPlayer.Background = RGB_YELLOW;
                 // Mark Yellow team selection on UI
                 } else {
                     arGameGrid[column, row] = 3;
-                    lsBorders[column][columnCounter[column]].Background = RGB_YELLOW;
+                    updateUIGrid(column, columnCounter[column], RGB_YELLOW);
                     brdCurrentPlayer.Background = RGB_RED;
                 }
                 // Invoke game logic
@@ -95,40 +71,42 @@ namespace connect_four {
             }
         }
 
-        private static void toggleCurrentPlayer() {
+        private void toggleCurrentPlayer() {
             currentPlayer = !currentPlayer;
         }
 
         /** Check each direction on the player's selection for a victory (4 in a line) */
-        private static void runGameLogic(int column) {
-            bool player = currentPlayer;
-            int row = columnCounter[column];
+        private void runGameLogic(int column) {
+
+            int posX,                               // Position: X (column)
+                posY,                               //           Y (row)
+                sumScore,                           // adds up the current players score (4 = Red win, 12 = Yellow win)
+                row = columnCounter[column];        // Marks the row the player selected
+
+            bool player = currentPlayer;            // Compared to check if a grid placement belongs to the current player
+
             // Horizontal ( - )
-            score = 0;
+            sumScore = 0;
             for (posX = 0; posX < COLUMN_MAX; posX++) {
-                index = arGameGrid[posX, row];
-                compareScore();
+                compareScore(arGameGrid[posX, row]);
             }
             // Vertical ( | )
-            score = 0;
+            sumScore = 0;
             for (posY = 0; posY < ROW_MAX; posY++) {
-                index = arGameGrid[column, posY];
-                compareScore();
+                compareScore(arGameGrid[column, posY]);
             }
             // Diagonal Right ( / )
-            score = 0;
+            sumScore = 0;
             for (findPositionLimit(false); posY < ROW_MAX; posY++, posX++) {
                 if (posX < COLUMN_MAX && posY < ROW_MAX) {
-                    index = arGameGrid[posX, posY];
-                    compareScore();
+                    compareScore(arGameGrid[posX, posY]);
                 }
             }
             // Diagonal Left ( \ )
-            score = 0;
+            sumScore = 0;
             for (findPositionLimit(true); posY < ROW_MAX; posY++, posX--) {
                 if (posX > 0 && posY < ROW_MAX) {
-                    index = arGameGrid[posX, posY];
-                    compareScore();
+                    compareScore(arGameGrid[posX, posY]);
                 }
             }
 
@@ -152,8 +130,8 @@ namespace connect_four {
             }
 
             /** (Nested) Compare the score against the index */
-            void compareScore() {
-                bool identifyPlayer = index switch {
+            void compareScore(int gridIndex) {
+                bool identifyPlayer = gridIndex switch {
                     1 => true,      // Red
                     3 => false,     // Yellow
                     _ => !player    // Empty
@@ -161,25 +139,54 @@ namespace connect_four {
                 // Validate current index is the same player
                 player = identifyPlayer;
                 if (player != currentPlayer) {
-                    score = 0;
+                    sumScore = 0;
                 } else {
-                    score = score + index;
+                    sumScore = sumScore + gridIndex;
                 }
                 // Check for a victory condition
-                if (score == 4) {
+                if (sumScore == 4) {
                     txbWinner.Text = "Red Team Wins!";
                     txbWinner.Visibility = Visibility.Visible;
-                    enableButtons(false);
-                } else if (score == 12) {
+                    enableUIButtons(false);
+                } else if (sumScore == 12) {
                     txbWinner.Text = "Yellow Team Wins!";
                     txbWinner.Visibility = Visibility.Visible;
-                    enableButtons(false);
+                    enableUIButtons(false);
                 }
             }
         }
 
+        /*      UIControls      */
+
+        /** Brings the UI elements to the ConnectFour class */
+        public static void getUIElements(List<List<Border>> lsBrd, List<StackPanel> lsBtn, Border brd, TextBlock txb) {
+            lsBorders = lsBrd;
+            lsStackPanels = lsBtn;
+            brdCurrentPlayer = brd;
+            txbWinner = txb;
+        }
+        
+        /** Resets the main window (.xaml) elements */
+        public void resetUI() {
+            // Reset grid
+            for (int i = 0; i < COLUMN_MAX; i++) {
+                for (int j = 0; j < ROW_MAX; j++) {
+                    updateUIGrid(i, j, RGB_DARK);
+                }
+            }
+            // Reset player to default
+            brdCurrentPlayer.Background = RGB_RED;
+            txbWinner.Visibility = Visibility.Collapsed;
+            enableUIButtons(true);
+        }
+
+        /** Sets the selected grid element to the specified color */
+        public static void updateUIGrid(int innerIndex, int outerIndex, SolidColorBrush colorBrush) {
+            lsBorders[innerIndex][outerIndex].Background = colorBrush;
+        }
+
         /** Enables/disables UI buttons for team input */
-        private static void enableButtons(bool isEnabled) {
+        private static void enableUIButtons(bool isEnabled) {
             foreach(StackPanel stackPanel in lsStackPanels) {
                 stackPanel.IsEnabled = isEnabled;
             }
