@@ -54,25 +54,32 @@ namespace connect_four {
                 if (currentPlayer) {
                     arGameGrid[column, row] = 1;
                     updateUIGrid(column, columnCounter[column], RGB_RED);
-                    brdCurrentPlayer.Background = RGB_YELLOW;
                 // Mark Yellow team selection on UI
                 } else {
                     arGameGrid[column, row] = 3;
                     updateUIGrid(column, columnCounter[column], RGB_YELLOW);
-                    brdCurrentPlayer.Background = RGB_RED;
                 }
                 // Invoke game logic
                 runGameLogic(column);
                 columnCounter[column]++;
-                toggleCurrentPlayer();
+                currentPlayer = toggleCurrentPlayer(currentPlayer);
             // Column is full (Play error sound)
             } else {
                 System.Media.SystemSounds.Beep.Play();
             }
         }
 
-        private void toggleCurrentPlayer() {
-            currentPlayer = !currentPlayer;
+        private bool toggleCurrentPlayer(bool isRedTeam) {
+            
+            // Toggle UI to show which team is due to play next
+            if (isRedTeam) {
+                brdCurrentPlayer.Background = RGB_YELLOW;
+
+            } else {
+                brdCurrentPlayer.Background = RGB_RED;
+            }
+            // Swap the team for the game logic
+            return !isRedTeam;
         }
 
         /** Check each direction on the player's selection for a victory (4 in a line) */
@@ -120,7 +127,7 @@ namespace connect_four {
                         posX--;
                         posY--;
                     }
-                    // Diagonal Left
+                // Diagonal Left
                 } else {
                     while (posX < COLUMN_MAX - 1 && posY > 0) {
                         posX++;
@@ -145,16 +152,16 @@ namespace connect_four {
                 }
                 // Check for a victory condition
                 if (sumScore == 4) {
-                    txbWinner.Text = "Red Team Wins!";
-                    txbWinner.Visibility = Visibility.Visible;
-                    enableUIButtons(false);
+                    // Red team wins
+                    showUIWinner(true);
                 } else if (sumScore == 12) {
-                    txbWinner.Text = "Yellow Team Wins!";
-                    txbWinner.Visibility = Visibility.Visible;
-                    enableUIButtons(false);
+                    // Yellow team wins
+                    showUIWinner(false);
                 }
             }
         }
+
+
 
         /*      UIControls      */
 
@@ -183,6 +190,17 @@ namespace connect_four {
         /** Sets the selected grid element to the specified color */
         public static void updateUIGrid(int innerIndex, int outerIndex, SolidColorBrush colorBrush) {
             lsBorders[innerIndex][outerIndex].Background = colorBrush;
+        }
+
+        /** Disables user input and updates UI with the games winner */
+        private static void showUIWinner(bool isRedTeam) {
+            if (isRedTeam) {
+                txbWinner.Text = "Red Team Wins!";
+            } else {
+                txbWinner.Text = "Yellow Team Wins!";
+            }
+            txbWinner.Visibility = Visibility.Visible;
+            enableUIButtons(false);
         }
 
         /** Enables/disables UI buttons for team input */
