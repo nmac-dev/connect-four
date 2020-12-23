@@ -50,11 +50,10 @@ namespace connect_four {
             int row = columnCounter[column];
             // Validate row is under max index
             if (row != ROW_MAX) {
-                // Mark Red team selection on UI
+                // Update grid and UI with users input
                 if (currentPlayer) {
                     arGameGrid[column, row] = 1;
                     updateUIGrid(column, columnCounter[column], RGB_RED);
-                // Mark Yellow team selection on UI
                 } else {
                     arGameGrid[column, row] = 3;
                     updateUIGrid(column, columnCounter[column], RGB_YELLOW);
@@ -89,8 +88,6 @@ namespace connect_four {
                 posY,                               //           Y (row)
                 sumScore,                           // adds up the current players score (4 = Red win, 12 = Yellow win)
                 row = columnCounter[column];        // Marks the row the player selected
-
-            bool player = currentPlayer;            // Compared to check if a grid placement belongs to the current player
 
             // Horizontal ( - )
             sumScore = 0;
@@ -138,18 +135,20 @@ namespace connect_four {
 
             /** (Nested) Compare the score against the index */
             void compareScore(int gridIndex) {
-                bool identifyPlayer = gridIndex switch {
-                    1 => true,      // Red
-                    3 => false,     // Yellow
-                    _ => !player    // Empty
+
+                // Validates the grid index is the same player
+                bool identifyGridSelection = gridIndex switch {
+                    1 => true,              // Red
+                    3 => false,             // Yellow
+                    _ => !currentPlayer     // Empty
                 };
-                // Validate current index is the same player
-                player = identifyPlayer;
-                if (player != currentPlayer) {
+
+                if (identifyGridSelection != currentPlayer) {
                     sumScore = 0;
                 } else {
                     sumScore = sumScore + gridIndex;
                 }
+
                 // Check for a victory condition
                 if (sumScore == 4) {
                     // Red team wins
@@ -160,8 +159,6 @@ namespace connect_four {
                 }
             }
         }
-
-
 
         /*      UIControls      */
 
