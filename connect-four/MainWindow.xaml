@@ -54,7 +54,7 @@
         <Border x:Name="brdCurrentPlayer" Background="Red" Height="25" Margin="0,10,15,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="25"/>
         <TextBlock Foreground="White" Text="Current Player's Turn:" FontSize="18" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,10,45,0" Height="35" HorizontalAlignment="Right" Width="170"/>
         <Button x:Name="btnRestart" Content="Restart Game" Margin="15,10,0,0" Height="25" Width="195" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnRestart_Click" />
-        <TextBlock x:Name="txbWinner" Height="120" FontSize="75" Foreground="White" Panel.ZIndex="1" Background="Black" Opacity="0.85" TextAlignment="Center" Visibility="Collapsed" TextWrapping="Wrap" />
+        <TextBlock x:Name="txbWinner" Height="100" FontSize="65" Foreground="White" Panel.ZIndex="1" Background="Black" Opacity="0.85" TextAlignment="Center" Visibility="Collapsed" TextWrapping="Wrap" />
         <!--A-->
         <StackPanel Margin="10,30,0,10">
             <Border x:Name="bdrA6" Height="75"/>
