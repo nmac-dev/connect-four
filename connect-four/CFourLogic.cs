@@ -4,9 +4,9 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace connect_four {
-    /** 
-     * Defines the UI controls and game logic for a connect four game 
-     */
+    //
+    // Summary:
+    //      Defines the UI controls and game logic for a connect four game
     public class CFourLogic {
 
         /*      Const       */
@@ -25,13 +25,11 @@ namespace connect_four {
 
         /*      Game Variables      */
         private enum Player {
-            NONE,                       // NONE must be first enum (defaults for grid population)
+            NONE,                                  // NONE must be first enum (defaults for grid population)
             RED,
             YELLOW
         }
-        private Player currentPlayer;   // tracks the current player
-        
-        /** Game grid */
+        private Player currentPlayer;              // Tracks the current player for each turn
         private readonly int[] columnCounter;      // Increments a column upon player selection
         private readonly Player[,] arGameGrid;     // Tracks each teams selection
         /*   -----------------------
@@ -157,8 +155,8 @@ namespace connect_four {
 
         /*      UIControls      */
 
-        /** Brings the UI elements to the ConnectFour class */
-        public static void getUIElements(List<List<Border>> lsBrd, List<StackPanel> lsBtn, Border brd, TextBlock txb) {
+        /** Sets the UI elements for the UI control methods */
+        public static void setUIElements(List<List<Border>> lsBrd, List<StackPanel> lsBtn, Border brd, TextBlock txb) {
             lsBorders = lsBrd;
             lsStackPanels = lsBtn;
             brdCurrentPlayer = brd;
@@ -167,13 +165,13 @@ namespace connect_four {
         
         /** Resets the main window (.xaml) elements */
         public void resetUI() {
-            // Reset grid
+            // Reset UI grid
             for (int i = 0; i < COLUMN_MAX; i++) {
                 for (int j = 0; j < ROW_MAX; j++) {
                     updateUIGrid(i, j, Player.NONE);
                 }
             }
-            // Reset player to default
+            // Reset current player to default (red)
             brdCurrentPlayer.Background = RGB_RED;
             txbWinner.Visibility = Visibility.Collapsed;
             enableUIButtons(true);

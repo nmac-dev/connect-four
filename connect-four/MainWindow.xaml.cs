@@ -1,14 +1,12 @@
-﻿/** MainWindow.xaml.cs */
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace connect_four {
-
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    //
+    // Summary:
+    //      Interaction logic for MainWindow.xaml
     public partial class MainWindow : Window {
 
         /*      Const       */
@@ -20,20 +18,15 @@ namespace connect_four {
                           COLUMN_F = 5,
                           COLUMN_G = 6;
 
-        /** Lists */
-        private readonly List<List<Border>> lsBorders;      // The borders within each stackpanel to display player selcetion
-        private readonly List<StackPanel> lsStackPanels;    // All stackpanels representing borders
-
         private CFourLogic connectFour;                     // Instantiated for each game
 
         /** Constructor */
         public MainWindow() {
-            InitializeComponent();  // Gets URI for the .xaml
 
+            InitializeComponent();          
             List<Border> lsTemp;
-
-            lsBorders = new List<List<Border>>();
-            lsStackPanels = new List<StackPanel>();
+            List<List<Border>> lsBorders = new List<List<Border>>();    // The borders within each stackpanel to display player selection
+            List<StackPanel> lsStackPanels = new List<StackPanel>();    // All stackpanels representing borders
 
             // Populates the lists with UI elements
             foreach (StackPanel stackPanel in windowGrid.Children.OfType<StackPanel>()) {
@@ -42,7 +35,7 @@ namespace connect_four {
                 lsBorders.Add(lsTemp);
                 lsStackPanels.Add(stackPanel);
             }
-            CFourLogic.getUIElements(lsBorders, lsStackPanels, brdCurrentPlayer, txbWinner);
+            CFourLogic.setUIElements(lsBorders, lsStackPanels, brdCurrentPlayer, txbWinner);
             // Create new game
             connectFour = new CFourLogic();
         }
