@@ -46,7 +46,6 @@ namespace connect_four {
         /**      Events      */
         // Restart
         private void btnRestart_Click(object sender, RoutedEventArgs e) {
-
             // Instantiate new game
             connectFour = new CFourLogic();
             connectFour.resetUI();
