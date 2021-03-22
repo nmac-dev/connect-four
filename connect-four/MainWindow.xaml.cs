@@ -4,48 +4,51 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace connect_four {
-    //
-    // Summary:
-    //      Interaction logic for MainWindow.xaml
+    /// <summary>
+    ///     Interaction logic for MainWindow.xaml
+    /// </summary>
     public partial class MainWindow : Window {
 
-        /*      Const       */
-        private const int COLUMN_A = 0,
-                          COLUMN_B = 1,
-                          COLUMN_C = 2,
-                          COLUMN_D = 3,
-                          COLUMN_E = 4,
-                          COLUMN_F = 5,
-                          COLUMN_G = 6;
+        /**      Const       */
+        private const int 
+            COLUMN_A = 0,
+            COLUMN_B = 1,
+            COLUMN_C = 2,
+            COLUMN_D = 3,
+            COLUMN_E = 4,
+            COLUMN_F = 5,
+            COLUMN_G = 6;
 
-        private CFourLogic connectFour;                     // Instantiated for each game
+        private CFourLogic connectFour;     // Instantiated for each game
 
-        /** Constructor */
+        /* Constructor */
         public MainWindow() {
 
             InitializeComponent();          
-            List<Border> lsTemp;
-            List<List<Border>> lsBorders = new List<List<Border>>();    // The borders within each stackpanel to display player selection
-            List<StackPanel> lsStackPanels = new List<StackPanel>();    // All stackpanels representing borders
+            List<Border>       lsTemp;
+            List<List<Border>> lsBorders     = new List<List<Border>>();    // The borders within each stackpanel to display player selection
+            List<StackPanel>   lsStackPanels = new List<StackPanel>();      // All stackpanels representing borders
 
             // Populates the lists with UI elements
             foreach (StackPanel stackPanel in windowGrid.Children.OfType<StackPanel>()) {
+
                 lsTemp = stackPanel.Children.OfType<Border>().ToList();
                 lsTemp.Reverse();
                 lsBorders.Add(lsTemp);
                 lsStackPanels.Add(stackPanel);
             }
             CFourLogic.setUIElements(lsBorders, lsStackPanels, brdCurrentPlayer, txbWinner);
+
             // Create new game
             connectFour = new CFourLogic();
         }
 
-        /*      Events      */
+        /**      Events      */
         // Restart
         private void btnRestart_Click(object sender, RoutedEventArgs e) {
+
             // Instantiate new game
             connectFour = new CFourLogic();
-            // Reset main window (.xaml) elements
             connectFour.resetUI();
         }
         // A
