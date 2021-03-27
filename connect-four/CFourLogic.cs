@@ -19,7 +19,6 @@ namespace connect_four {
             RGB_YELLOW = new SolidColorBrush(Color.FromRgb(0xff, 0xff, 0x00)),
             RGB_DARK   = new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33));
 
-
         /**     UI Elements     */
         private static List<List<Border>> lsBorders;
         private static List<StackPanel>   lsStackPanels;
@@ -34,6 +33,7 @@ namespace connect_four {
         }
         private Player             currentPlayer;   // Tracks the current player for each turn
         private readonly int[]     columnCounter;   // Increments a column upon player selection
+        
         private readonly Player[,] arGameGrid;      // Tracks each teams selection
         /*   -----------------------
          * 5 | 05 15 25 35 45 55 65 |
@@ -58,6 +58,7 @@ namespace connect_four {
         public void checkUserInput(int column) {
 
             int row = columnCounter[column];
+            
             // Validate row is under max index
             if (row != ROW_MAX) {
 
