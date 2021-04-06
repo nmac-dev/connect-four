@@ -7,6 +7,7 @@ A game of Connect Four as a WPF application to showcase C# programming skills.
    - [Development Tools](#Development-Tools)
  - [Showcase Screenshots](#Showcase-Screenshots)
  - [Design](#Design)
+   - [Flow-Chart Concept](#Flow-Chart-Concept)
    - [UI](#UI)
    - [Logic](#Logic)
   
@@ -38,6 +39,9 @@ Any of the following:
   
 ## Design
   
+### Flow-Chart Concept
+<img alt="UI Design" height="450px" src="README/cFour_flow.png">
+  
 ### UI
 A game of connect four has seven columns and six rows. So I just needed a few extra UI elements:
  * A reset button
@@ -46,11 +50,14 @@ A game of connect four has seven columns and six rows. So I just needed a few ex
  * Stackpanels to house the columns and buttons (makes the UI far more manageable)
   
 **UI Design:**  
-<img alt="UI Design" height="450px" src="README/cFour.png">
+<img alt="UI Design" height="450px" src="README/cFour_ui.png">
   
 ### Logic
 Originally the logic design was to check the entire grid for a win condition.  
 An optimised solution was found by checking the, diagonal, horizontal, and vertical, axes from the players most recent move.  
+  
+**Original Logic Design:**  
+<img alt="Logic Design" height="450px" src="README/cFour_origin.png">
   
 **Optimised Logic Design:**  
 <img alt="Logic Design" height="450px" src="README/cFour_loop.png">
