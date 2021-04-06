@@ -37,7 +37,6 @@ Any of the following:
 <img alt="Yellow Wins" height="450px" src="README/cf-yw.png">
   
 ## Design
-Deisgned to be a portable version for a game of Connect Four.
   
 ### UI
 A game of connect four has seven columns and six rows. So I just needed a few extra UI elements:
