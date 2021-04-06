@@ -50,7 +50,7 @@ A game of connect four has seven columns and six rows. So I just needed a few ex
   
 ### Logic
 Originally the logic design was to check the entire grid for a win condition.  
-An optimised solution was found by checking the, diaginal, horizontal, and vertical, axes from the players most recent move.  
+An optimised solution was found by checking the, diagonal, horizontal, and vertical, axes from the players most recent move.  
   
 **Optimised Logic Design:**  
 <img alt="Logic Design" height="450px" src="README/cFour_loop.png">
