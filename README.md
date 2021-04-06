@@ -28,13 +28,13 @@ Any of the following:
 ## Showcase Screenshots
   
 **Mid-Game**
-<img alt="Mid-Game" src="cf-1.png">
+<img alt="Mid-Game" src="README/cf-1.png">
   
 **Red-Wins**
-<img alt="Red Wins" src="cf-rw.png">
+<img alt="Red Wins" src="README/cf-rw.png">
   
 **Yellow Wins**
-<img alt="Yellow Wins" src="cf-yw.png">
+<img alt="Yellow Wins" src="README/cf-yw.png">
   
 ## Design
 Deisgned to be a portable version for a game of Connect Four.
@@ -46,12 +46,12 @@ A game of connect four has seven columns and six rows. So I just needed a few ex
  * Each column will need a button (rows do not as each coin sits on top of the previous)
  * Stackpanels to house the columns and buttons (makes the UI far more manageable)
   
-**The Design Mock Up:**  
+**UI Design:**  
 <img alt="UI Design" src="README/cFour.png">
   
 ### Logic
 Originally the logic design was to check the entire grid for a win condition.  
 An optimised solution was found by checking the, diaginal, horizontal, and vertical, axes from the players most recent move.  
   
-**Optimised Design:**  
+**Optimised Logic Design:**  
 <img alt="Logic Design" src="README/cFour_loop.png">
