@@ -46,6 +46,7 @@ Any of the following:
 A game of connect four has seven columns and six rows. So I just needed a few extra UI elements:
  * A reset button
  * A status bar to display the current players turn
+ * Six boarders per column to represent coin slots
  * Each column will need a button (rows do not as each coin sits on top of the previous)
  * Stackpanels to house the columns and buttons (makes the UI far more manageable)
   
